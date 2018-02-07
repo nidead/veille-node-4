@@ -30,11 +30,21 @@ console.log('la route /traiter_get')
 console.log(reponse);
  res.end(JSON.stringify(reponse));
 })
+
+fs.appendFile( __dirname + "/public/data/" + "membres.txt" , "dddd", function (err,data) {
+  if (err) throw err;
+  console.log('Sauvegardé');
+});
 ///////////////////////////////// route emembre
 app.get("/membres",(req,res)=>{
 	fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', function (err, data) {
  if (err) throw err;
+
+ //obj = JSON.parse([data]);
+
+
  res.sendFile( __dirname + "/public/data/" + "membres.txt" );
+
 });
 })
 
