@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 app.use(express.static('public'));
 //////////////////////////////////////////////////////////////////////ROUTE /html/01_form.htm'
-app.get('/html/formulaire.htm', function (req, res) {
+app.get('/formulaire', function (req, res) {
  console.log(__dirname);
- res.sendFile( __dirname + "/" + "formulaire.htm" );
+ res.sendFile( __dirname + "/public/html/" + "01_form.htm" );
 })
 //////////////////////////////////////////////////////////////////////ROUTE RACINE
 app.get('/', (req, res) => {
