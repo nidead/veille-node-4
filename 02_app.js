@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
+const fs = require("fs");
 //////////////////////////////////////////////////////////////////////ROUTE /html/01_form.htm'
 app.get('/formulaire', function (req, res) {
  console.log(__dirname);
@@ -28,6 +29,13 @@ console.log('la route /traiter_get')
  };
 console.log(reponse);
  res.end(JSON.stringify(reponse));
+})
+///////////////////////////////// route emembre
+app.get("/membres",(req,res)=>{
+	fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', function (err, data) {
+ if (err) throw err;
+ res.sendFile( __dirname + "/public/data/" + "membres.txt" );
+});
 })
 
 var server = app.listen(8081, function () {
