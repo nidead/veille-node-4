@@ -2,6 +2,18 @@ const express = require('express');
 const app = express();
 app.use(express.static('public'));
 const fs = require("fs");
+
+const transform_en_tableau =(collection)=>
+{
+	let chaine ="<table>"
+	for (elm of collection){
+		for(p in elm){
+
+		}
+	}
+	chaine+= '</table>'
+	return chaine
+}
 //////////////////////////////////////////////////////////////////////ROUTE /html/01_form.htm'
 app.get('/formulaire', function (req, res) {
  console.log(__dirname);
@@ -29,21 +41,22 @@ console.log('la route /traiter_get')
  };
 console.log(reponse);
  res.end(JSON.stringify(reponse));
-})
 
-fs.appendFile( __dirname + "/public/data/" + "membres.txt" , "dddd", function (err,data) {
+
+fs.appendFile( __dirname + "/public/data/" + "membres.txt" ,","+ JSON.stringify(reponse), function (err,data) {
   if (err) throw err;
   console.log('Sauvegardé');
 });
+})
 ///////////////////////////////// route emembre
 app.get("/membres",(req,res)=>{
 	fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', function (err, data) {
  if (err) throw err;
 
- //obj = JSON.parse([data]);
+let collection = JSON.parse("["+ data +"]");
+res.end(transform_en_tableau(collection));
 
-
- res.sendFile( __dirname + "/public/data/" + "membres.txt" );
+ //res.sendFile( __dirname + "/public/data/" + "membres.txt" );
 
 });
 })
