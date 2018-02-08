@@ -3,16 +3,22 @@ const app = express();
 app.use(express.static('public'));
 const fs = require("fs");
 
-const transform_en_tableau =(collection)=>
-{
-	let chaine ="<table>"
-	for (elm of collection){
-		for(p in elm){
+const transform_en_tableau = (tableau) =>{
 
+
+	
+	let nomVar = '<head><meta charset="UTF-8"><link rel="stylesheet" type="text/less" href="/less/style.less"></head><table><tr><th>Prénom</th><th>Nom de famille</th><th>Téléphone</th><th>Courriel</th><th>Id</th></tr>';
+	for(elm of tableau) {
+		nomVar += '<tr>';
+		for(p in elm) {
+			nomVar += '<td>'  + elm[p] + '</td>'; 
 		}
+				nomVar += '</tr>';
+
 	}
-	chaine+= '</table>'
-	return chaine
+
+	nomVar += '</table>'
+	return nomVar;
 }
 //////////////////////////////////////////////////////////////////////ROUTE /html/01_form.htm'
 app.get('/formulaire', function (req, res) {
@@ -43,7 +49,7 @@ console.log(reponse);
  res.end(JSON.stringify(reponse));
 
 
-fs.appendFile( __dirname + "/public/data/" + "membres.txt" ,","+ JSON.stringify(reponse), function (err,data) {
+fs.appendFile( __dirname + "/public/data/" + "membres.txt" ,","+ JSON.stringify(reponse), function (err) {
   if (err) throw err;
   console.log('Sauvegardé');
 });
@@ -53,8 +59,7 @@ app.get("/membres",(req,res)=>{
 	fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', function (err, data) {
  if (err) throw err;
 
-let collection = JSON.parse("["+ data +"]");
-res.end(transform_en_tableau(collection));
+ res.end( transform_en_tableau( JSON.parse('[' + data + ']' )));
 
  //res.sendFile( __dirname + "/public/data/" + "membres.txt" );
 
