@@ -16,7 +16,7 @@ const transform_en_tableau = (tableau) => {
     return nomVar;
 }
 //////////////////////////////////////////////////////////////////////ROUTE /html/01_form.htm'
-app.get('/formulaire', function(req, res) {
+app.get('/formulaire', (req, res) => {
     console.log(__dirname);
     res.sendFile(__dirname + "/public/html/" + "01_form.htm");
 })
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     res.end('<h1>Accueil</h1>')
 })
 //////////////////////////////////////////////////////////////////////ROUTE TRAITER GET
-app.get('/traiter_get', function(req, res) {
+app.get('/traiter_get', (req, res)=>  {
     // Preparer l'output en format JSON
     console.log('la route /traiter_get')
 
@@ -41,23 +41,23 @@ app.get('/traiter_get', function(req, res) {
     console.log(reponse);
     res.end(JSON.stringify(reponse));
 
-    fs.appendFile(__dirname + "/public/data/" + "membres.txt", "," + JSON.stringify(reponse), function(err) {
+    fs.appendFile(__dirname + "/public/data/" + "membres.txt", "," + JSON.stringify(reponse), (err)=>  {
         if (err) throw err;
         console.log('Sauvegardé');
     });
 })
 ///////////////////////////////// route emembre
 app.get("/membres", (req, res) => {
-    fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', function(err, data) {
+    fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', (err, data)=> {
         if (err) throw err;
         res.end(transform_en_tableau(JSON.parse('[' + data + ']')));
         //res.sendFile( __dirname + "/public/data/" + "membres.txt" );
     });
 })
 
-var server = app.listen(8081, function() {
-    var host = server.address().address
-    var port = server.address().port
+    let server = app.listen(8081, function() {
+    let host = server.address().address
+    let port = server.address().port
 
     console.log("Exemple l'application écoute sur http://%s:%s", host, port)
 
